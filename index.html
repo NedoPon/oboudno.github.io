@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Электронный дневник</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+        }
+
+        body {
+            background: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .navbar {
+            background: var(--primary-color) !important;
+        }
+
+        .main-container {
+            margin-top: 20px;
+            padding: 20px;
+        }
+
+        .schedule-table {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .grade-badge {
+            font-size: 0.9em;
+            margin: 2px;
+        }
+
+        .day-nav {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .day-nav:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar navbar-dark">
+        <div class="container">
+            <span class="navbar-brand mb-0 h1">Электронный дневник</span>
+        </div>
+    </nav>
+
+    <div class="container main-container">
+        <!-- Блок с расписанием -->
+        <div class="schedule-table p-4 mb-4">
+            <h4 class="mb-3">Расписание на неделю</h4>
+            <div class="row" id="schedule"></div>
+        </div>
+
+        <!-- Блок с оценками -->
+        <div class="grades-table p-4 mb-4">
+            <h4 class="mb-3">Последние оценки</h4>
+            <div id="grades"></div>
+        </div>
+    </div>
+
+<script>
+// Пример данных (можно заменить на реальные)
+const scheduleData = {
+    "Понедельник": ["Математика", "Физика", "История"],
+    "Вторник": ["Литература", "Химия", "Биология"],
+    "Среда": ["Информатика", "Английский", "Физкультура"],
+    "Четверг": ["География", "Обществознание", "Технология"],
+    "Пятница": ["ОБЖ", "Музыка", "ИЗО"]
+};
+
+const gradesData = [
+    {subject: "Математика", grade: 5, date: "01.09.2023"},
+    {subject: "Физика", grade: 4, date: "02.09.2023"},
+    {subject: "История", grade: 5, date: "03.09.2023"}
+];
+
+// Генерация расписания
+function renderSchedule() {
+    const container = document.getElementById('schedule');
+    let html = '';
+    
+    for (const [day, lessons] of Object.entries(scheduleData)) {
+        html += `
+            <div class="col-md-2 day-nav mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>${day}</h5>
+                        <ul class="list-unstyled">
+                            ${lessons.map(lesson => `<li>${lesson}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    container.innerHTML = html;
+}
+
+// Генерация оценок
+function renderGrades() {
+    const container = document.getElementById('grades');
+    container.innerHTML = gradesData.map(grade => `
+        <div class="d-flex justify-content-between border-bottom py-2">
+            <span>${grade.subject}</span>
+            <span class="badge bg-primary grade-badge">${grade.grade}</span>
+            <small class="text-muted">${grade.date}</small>
+        </div>
+    `).join('');
+}
+
+// Инициализация
+window.addEventListener('DOMContentLoaded', () => {
+    renderSchedule();
+    renderGrades();
+});
+</script>
+
+<!-- Дополнительные функции можно добавить здесь -->
+</body>
+  </html> 
